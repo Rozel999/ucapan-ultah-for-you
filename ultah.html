@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .phone-container {
+            width: 320px;
+            height: 640px;
+            background: #1a1a1a;
+            border-radius: 35px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #dda0dd);
+            background-size: 300% 300%;
+            animation: gradientShift 8s ease infinite;
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            color: white;
+            height: calc(100% - 60px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .header {
+            animation: slideInTop 1s ease-out;
+        }
+
+        .birthday-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+            to { text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8); }
+        }
+
+        .photo-gallery {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+            animation: slideInLeft 1.5s ease-out;
+        }
+
+        .photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #ffeaa7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .photo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .music-player {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            animation: slideInRight 2s ease-out;
+        }
+
+        .song-info {
+            margin-bottom: 10px;
+        }
+
+        .song-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .artist {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .music-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            background: rgba(255,255,255,0.3) !important;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .message-section {
+            animation: slideInBottom 2.5s ease-out;
+        }
+
+        .birthday-message {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes slideInTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            color: white;
+            position: relative;
+            animation: modalSlideIn 0.5s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .birthday-game {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .balloon {
+            font-size: 30px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .balloon:hover {
+            transform: scale(1.2);
+        }
+
+        .popped {
+            opacity: 0.3;
+            transform: scale(0.5);
+        }
+
+        .wish-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+            text-align: left;
+        }
+
+        .audio-player {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+        }
+
+        .cake-emoji {
+            font-size: 48px;
+            animation: rotate 4s linear infinite;
+            margin: 10px 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: firework 2s ease-out infinite;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="screen">
+            <div class="notification-badge">🎉</div>
+            
+            <div class="status-bar">
+                <span>🎂 Birthday</span>
+                <span>🎁 100%</span>
+            </div>
+
+            <div class="content">
+                <div class="header">
+                    <h1 class="birthday-title">🎊 SELAMAT ULANG TAHUN! 🎊</h1>
+                    <div class="cake-emoji">🎂</div>
+                </div>
+
+                <div class="photo-gallery">
+                    <div class="photo" onclick="openGallery()">📸</div>
+                    <div class="photo" onclick="openMessages()">💌</div>
+                    <div class="photo" onclick="openGames()">🎮</div>
+                    <div class="photo" onclick="openWishes()">⭐</div>
+                </div>
+
+                <div class="music-player">
+                    <div class="song-info">
+                        <div class="song-title">🎵 Happy Birthday Song</div>
+                        <div class="artist">Special Edition</div>
+                    </div>
+                    <div class="music-controls">
+                        <button class="control-btn" onclick="previousTrack()">⏮️</button>
+                        <button class="control-btn play-btn" onclick="togglePlay()">▶️</button>
+                        <button class="control-btn" onclick="nextTrack()">⏭️</button>
+                    </div>
+                </div>
+
+                <div class="message-section">
+                    <div class="birthday-message">
+                        Semoga hari spesialmu dipenuhi dengan kebahagiaan, tawa, dan momen-momen indah yang tak terlupakan! 🥳
+                        <br><br>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-indicator"></div>
+            <div class="fireworks" id="fireworks"></div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('galleryModal')">&times;</button>
+            <h2>📸 Galeri Kenangan</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="showMemory(1)">
+                    <div style="font-size: 40px;">🎂</div>
+                    <p>Kue Ulang Tahun</p>
+                </div>
+                <div class="gallery-item" onclick="showMemory(2)">
+                    <div style="font-size: 40px;">🎁</div>
+                    <p>Hadiah Spesial</p>
+                </div>
+                <div class="gallery-item" onclick="showMemory(3)">
+                    <div style="font-size: 40px;">👨‍👩‍👧‍👦</div>
+                    <p>kenangan kita</p>
+                </div>
+                <div class="gallery-item" onclick="showMemory(4)">
+                    <div style="font-size: 40px;">🌈</div>
+                    <p>Momen Bahagia</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="messagesModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('messagesModal')">&times;</button>
+            <h2>💌 Pesan Ulang Tahun</h2>
+            <div class="wish-card">
+                <h3>🎉 Dari orang yang spesial</h3>
+                <p>"Selamat ulang tahun sayang! Semoga selalu sehat, bahagia, dan sukses dalam segala hal."</p>
+            </div>
+            <div class="wish-card">
+                <h3>🌟 for you</h3>
+                <p>"Happy birthday  Makasih udah jadi seseorang yang amazing. Semoga makin kece dan makin sukses ya!"</p>
+            </div>
+            <div class="wish-card">
+                <h3>💝 Pesan Khusus</h3>
+                <p>"Setiap tahun yang berlalu membuatmu semakin bijaksana dan menawan. Terus bersinar seperti bintang! ✨"</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="gamesModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('gamesModal')">&times;</button>
+            <h2>🎮 Birthday Game</h2>
+            <div class="birthday-game">
+                <h3>🎈 Pecahkan Balon!</h3>
+                <p>Klik balon untuk memecahkannya dan dapatkan kejutan!</p>
+                <div id="balloonGame">
+                    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+                </div>
+                <div id="gameScore">Balon tersisa: 6</div>
+            </div>
+            <button onclick="resetBalloons()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 20px; border-radius: 10px; margin-top: 15px; cursor: pointer;">🔄 Reset Game</button>
+        </div>
+    </div>
+
+    <div id="wishesModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('wishesModal')">&times;</button>
+            <h2>⭐ Harapan & Doa</h2>
+            <div class="birthday-cake-animation">🎂</div>
+            <div class="wish-card">
+                <h3>🌟 Untuk Tahun Depan</h3>
+                <p>Semoga di tahun yang baru ini, segala impianmu menjadi kenyataan. Kesehatan, kebahagiaan, dan kesuksesan selalu menyertaimu!</p>
+            </div>
+            <div class="wish-card">
+                <h3>💫 Doa Terbaik</h3>
+                <p>Semoga Allah SWT senantiasa memberikan keberkahan, melindungi, dan memberikan yang terbaik dalam setiap langkah hidupmu.</p>
+            </div>
+            <div class="wish-card">
+                <h3>🎯 Motivasi</h3>
+                <p>Jangan pernah berhenti bermimpi dan berusaha. Kamu punya potensi luar biasa untuk meraih semua yang kamu inginkan!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        let balloonCount = 6;
+        const songs = [
+            { title: "🎵 Selamat Ulang Tahun", artist: "Lagu Tradisional" },
+            { title: "🎶 Happy Birthday", artist: "English Version" },
+            { title: "🎼 Birthday Celebration", artist: "Party Mix" }
+        ];
+        let currentSong = 0;
+
+        // Audio untuk lagu selamat ulang tahun
+        const birthdayAudio = new Audio();
+        birthdayAudio.volume = 0.3;
+
+        function togglePlay() {
+            const playBtn = document.querySelector('.play-btn');
+            if (isPlaying) {
+                playBtn.textContent = '▶️';
+                isPlaying = false;
+                birthdayAudio.pause();
+            } else {
+                playBtn.textContent = '⏸️';
+                isPlaying = true;
+                playBirthdaySong();
+                createFireworks();
+            }
+        }
+
+        function playBirthdaySong() {
+            // Simulasi lagu selamat ulang tahun dengan beep
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [262, 262, 294, 262, 349, 330]; // C C D C F E
+            let noteIndex = 0;
+            
+            function playNote() {
+                if (noteIndex < notes.length && isPlaying) {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = notes[noteIndex];
+                    oscillator.type = 'sine';
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                    
+                    noteIndex++;
+                    setTimeout(playNote, 600);
+                } else if (isPlaying) {
+                    noteIndex = 0;
+                    setTimeout(playNote, 1000);
+                }
+            }
+            
+            playNote();
+        }
+
+        function nextTrack() {
+            currentSong = (currentSong + 1) % songs.length;
+            updateSongInfo();
+            createConfetti();
+        }
+
+        function previousTrack() {
+            currentSong = (currentSong - 1 + songs.length) % songs.length;
+            updateSongInfo();
+            createConfetti();
+        }
+
+        function updateSongInfo() {
+            document.querySelector('.song-title').textContent = songs[currentSong].title;
+            document.querySelector('.artist').textContent = songs[currentSong].artist;
+        }
+
+        // Modal functions
+        function openGallery() {
+            document.getElementById('galleryModal').style.display = 'flex';
+            createConfetti();
+        }
+
+        function openMessages() {
+            document.getElementById('messagesModal').style.display = 'flex';
+            createConfetti();
+        }
+
+        function openGames() {
+            document.getElementById('gamesModal').style.display = 'flex';
+            createConfetti();
+        }
+
+        function openWishes() {
+            document.getElementById('wishesModal').style.display = 'flex';
+            createFireworks();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showMemory(memoryNum) {
+            const memories = [
+                "🎂 Kue ulang tahun yang lezat dengan lilin yang berkilau!",
+                "🎁 Hadiah spesial yang penuh kejutan dan cinta!",
+                "👨‍👩‍👧‍👦 Foto bersama orang-orang terkasih ",
+                "🌈 Momen bahagia yang akan selalu dikenang selamanya!"
+            ];
+            
+            alert(memories[memoryNum - 1]);
+            createFireworks();
+        }
+
+        // Balloon game functions
+        function popBalloon(balloon) {
+            if (!balloon.classList.contains('popped')) {
+                balloon.classList.add('popped');
+                balloon.textContent = '💥';
+                balloonCount--;
+                document.getElementById('gameScore').textContent = `Balon tersisa: ${balloonCount}`;
+                
+                if (balloonCount === 0) {
+                    setTimeout(() => {
+                        alert('🎉 Selamat! Kamu berhasil memecahkan semua balon! Hadiah untukmu: KEBAHAGIAAN SELAMANYA! 🎁');
+                        createFireworks();
+                    }, 500);
+                }
+            }
+        }
+
+        function resetBalloons() {
+            const balloons = document.querySelectorAll('.balloon');
+            balloons.forEach(balloon => {
+                balloon.classList.remove('popped');
+                balloon.textContent = '🎈';
+            });
+            balloonCount = 6;
+            document.getElementById('gameScore').textContent = `Balon tersisa: ${balloonCount}`;
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                
+                document.querySelector('.screen').appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        function createFireworks() {
+            const fireworksContainer = document.getElementById('fireworks');
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.left = Math.random() * 100 + '%';
+                    firework.style.top = Math.random() * 100 + '%';
+                    firework.style.backgroundColor = getRandomColor();
+                    
+                    fireworksContainer.appendChild(firework);
+                    
+                    setTimeout(() => {
+                        firework.remove();
+                    }, 2000);
+                }, i * 400);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#ff9ff3', '#54a0ff'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Auto-create confetti every 5 seconds
+        setInterval(createConfetti, 5000);
+
+        // Initial confetti burst
+        setTimeout(createConfetti, 1000);
+
+        // Auto-play animation
+        setTimeout(() => {
+            createFireworks();
+        }, 2000);
+    </script>
+</body>
+</html>
